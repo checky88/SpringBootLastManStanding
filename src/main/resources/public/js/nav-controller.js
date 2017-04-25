@@ -17,6 +17,10 @@ angular.module('navController', [])
 			{
 				name: 'Fixtures',
 				url: '#/fixtures'
+			},
+			{
+				name: 'Customers',
+				url: '#/customers'
 			}
 		]
 	});

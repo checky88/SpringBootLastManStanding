@@ -1,15 +1,12 @@
 package test.fixture;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,15 +83,21 @@ public class FixtureController {
 
 	@RequestMapping(value = "fixtures", method = RequestMethod.GET)
 	public List<Fixture> list() {
+		
 		RestTemplate restTemplate = new RestTemplate();
 		
-		List<Fixture> fixture = restTemplate
-				.getForObject("http://api.football-data.org/v1/competitions/426/fixtures", Fixture.class)
-				.getFixtures();
-		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("Authorization", "X-Auth-Token "+accessToken);
 		
 
-		return fixture;
+		HttpEntity entity = new HttpEntity(headers);
+		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
+		
+		List<Fixture> response = fixture.getFixtures();
+		
+        
+		return response;
 	}
 
 	@RequestMapping(value = "fixtures/{id}", method = RequestMethod.GET)
@@ -108,36 +111,31 @@ public class FixtureController {
 	
 	///test method remove at the end
 	@RequestMapping(value = "/ray")
-	public void testing() {
-		long id = 150841;
-		//Fixture.get();
-
+	public List<Fixture> testing() {
+		
+		
 		RestTemplate restTemplate = new RestTemplate();
-	   
-		ResponseEntity<Fixture> fixture;
-	 
-	    HttpHeaders httpHeaders = this.createHeaders();
-	    		
-	    String url = "http://api.football-data.org/v1/competitions/426/fixtures";
-	    fixture = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<Object>(httpHeaders), Fixture.class);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("Authorization", "X-Auth-Token "+accessToken);
+		
+
+
+		HttpEntity entity = new HttpEntity(headers);
+		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
+		
+		List<Fixture> response = fixture.getFixtures();
+		
+		
+        
+		return response;
 
 	}
 	
 	
 	
-	private HttpHeaders createHeaders(){
-	    HttpHeaders headers =  new HttpHeaders(){
-	          {
-	             
-	             String authHeader = "X-Auth-Token " + new String( accessToken );
-	             set( "Authorization", authHeader );
-	          }
-	       };
-	       //headers.add("Content-Type", "application/xml");
-	       //headers.add("Accept", "application/xml");
 
-	       return headers;
-	}
 
 
 

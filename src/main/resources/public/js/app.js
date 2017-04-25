@@ -57,10 +57,10 @@
 		       url:'/fixtures/:id/view',
 		       templateUrl: viewsPrefix + 'fixture-view.html',
 		       controller:'FixtureViewController'
-	    }).state('newShipwreck',{
-	        url:'/shipwrecks/new',
-	        templateUrl: viewsPrefix + 'shipwreck-add.html',
-	        controller:'ShipwreckCreateController'
+	    }).state('customers',{
+	        url:'/customers',
+	        templateUrl: viewsPrefix + 'customers.html',
+	        controller:'CustomerListController'
 	    }).state('editShipwreck',{
 	        url:'/shipwrecks/:id/edit',
 	        templateUrl: viewsPrefix + 'shipwreck-edit.html',
