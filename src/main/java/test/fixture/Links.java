@@ -11,25 +11,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Links {
 
 	private List<Links> _links;
-	private String href;
+	private Self self;
+		
 	
-	 @JsonProperty("href")
-	public String getHref() {
-		return href;
+		public Self getSelf() {
+		return self;
 	}
-	public void setHref(String href) {
-		this.href = href;
+
+	public void setSelf(Self self) {
+		this.self = self;
 	}
-	@JsonProperty("_links")
-	public List<Links> getLinks() {
-		return _links;
-	}
-	@JsonProperty("_links")
-	public void setLinks(List<Links> _links) {
-		this._links = _links;
-	}
+
+		public List<Links> get_links() {
+			return _links;
+		}
+	
+		public void set_links(List<Links> _links) {
+			this._links = _links;
+		}
 
 	
 	
+
+	
+
+
+
+
+
 
 }

@@ -6,16 +6,18 @@
           <td></td>
       </tr><tr>
           <td>Matchday</td>
+          <td>ID</td>
           <td>Fixture</td>
           <td>Result</td>
           <td>Fixture details</td>
       </tr>
       <tr ng-repeat="fixture in fixtures | filter : searchText ">
           <td>{{fixture.matchday}}</td>
+          <td>{{fixture.fixtureId}}</td>
           <td>{{fixture.homeTeamName}} vs {{fixture.awayTeamName}}</td>
           <td>{{fixture.result.goalsHomeTeam}}:{{fixture.result.goalsAwayTeam}}</td>
           <td>
-             <a class="btn btn-primary" ui-sref="viewFixture({id:fixture.id})">View fixture</a>
+             <a class="btn btn-primary" ui-sref="viewFixture({fixtureId:fixture.fixtureId})">View fixture</a>
              <!--    <a class="btn btn-danger"  ng-click="deleteFixture(fixture)">Delete</a> -->
           </td>
       </tr>

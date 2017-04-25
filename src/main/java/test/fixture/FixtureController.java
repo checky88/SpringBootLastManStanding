@@ -13,12 +13,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import test.model.Customer;
+
 @RestController
 @RequestMapping("api/v1/")
 public class FixtureController {
-	private List<String> response = new ArrayList<String>();
+	
+	private List<Fixture> response;
 	
 	private final String accessToken = "3acf11744bd946098fe44176f6cc51a0";
+	
+	private static int currentGameWeek = 0;
+
+	public static int getCurrentGameWeek() {
+		return currentGameWeek;
+	}
 
 	@RequestMapping("/result")
 	public List<Fixture> outputresults() {
@@ -39,17 +48,10 @@ public class FixtureController {
 	public List<String> showFixture() {
 		RestTemplate restTemplate = new RestTemplate();
 
-		/*
-		 * List<Fixture> fixture = restTemplate .getForObject(
-		 * "http://api.football-data.org/v1/competitions/426/fixtures?",
-		 * Fixture.class) .getFixtures();
-		 */
-
 		List<Fixture> fixture = restTemplate
 				.getForObject("http://api.football-data.org/v1/competitions/426/fixtures?matchday=1", Fixture.class)
 				.getFixtures();
-
-		int count = 1;
+		 List<String> response = new ArrayList<String>();
 
 		for (Fixture elem : fixture) {
 			response.add(elem.getHomeTeamName() + " V  " + elem.getAwayTeamName());
@@ -72,13 +74,7 @@ public class FixtureController {
 
 		return response;
 
-		/*
-		 * List<String> response = new ArrayList<String>(); for (Fixture
-		 * fixture: wrapper.getFixtures()){ fixtureService.save(fixture);
-		 * response.add("Saved person: " + fixture.toString());
-		 */
 
-		// return response;
 	}
 
 	@RequestMapping(value = "fixtures", method = RequestMethod.GET)
@@ -87,21 +83,29 @@ public class FixtureController {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("Authorization", "X-Auth-Token "+accessToken);
+		//headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("X-Auth-Token", accessToken);
 		
-
-		HttpEntity entity = new HttpEntity(headers);
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
 		
-		List<Fixture> response = fixture.getFixtures();
+		response = fixture.getFixtures();
 		
+		for (Fixture elem : response) {
+			if(elem.getStatus().equals("TIMED") && currentGameWeek == 0 ){
+				currentGameWeek=elem.getMatchday();
+				System.out.println("The Game Week is currently " + elem.getMatchday());
+			}
+			
+		}
         
 		return response;
 	}
 
 	@RequestMapping(value = "fixtures/{id}", method = RequestMethod.GET)
-	public int get(@PathVariable long id) {
+	public int get(@PathVariable int id) {
+		 response.get(id);
+		
 		System.out.println("Hello world"+id);
 		
 		return 0;
@@ -109,26 +113,22 @@ public class FixtureController {
 	}
 	
 	
+	
 	///test method remove at the end
 	@RequestMapping(value = "/ray")
 	public List<Fixture> testing() {
 		
-		
 		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.set("Authorization", "X-Auth-Token "+accessToken);
+		//headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("X-Auth-Token", accessToken);
 		
-
-
-		HttpEntity entity = new HttpEntity(headers);
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
 		
-		List<Fixture> response = fixture.getFixtures();
-		
-		
-        
+		response = fixture.getFixtures();
+
 		return response;
 
 	}

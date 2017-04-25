@@ -12,9 +12,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @EnableAutoConfiguration(exclude = HypermediaAutoConfiguration.class)
 public class Fixture {
 
-	
+
+
 	private List<Fixture> fixtures;
-	
+
+
+	private int fixtureId;
 	private Links _links;
 	private String date;
 	private String status;
@@ -24,15 +27,30 @@ public class Fixture {
 
 	private Result result;
 	
+	
 
-    @JsonProperty("_links")
-	public Links getLinks() {
+	public int getFixtureId() {
+		String theString = get_links().getSelf().getHref();
+		theString = theString.substring(theString.length() - 6);
+		if(!theString.endsWith("es")){
+		 fixtureId = Integer.parseInt(theString);
+		}
+		return fixtureId;
+	}
+
+	public void setFixtureId(int fixtureId) {
+		
+		this.fixtureId = fixtureId;
+		
+	}
+
+	public Links get_links() {
 		return _links;
 	}
 
-    @JsonProperty("_links")
-	public void setLinks(Links _links) {
+	public void set_links(Links _links) {
 		this._links = _links;
+
 	}
 
 	public String getAwayTeamName() {
@@ -94,7 +112,7 @@ public class Fixture {
 	}
 	
 	//getting a fixture by ID 
-	public static Fixture get(Long id) {
+	public static Fixture get(int id) {
 		return Fixture.get(id);
 	}
 

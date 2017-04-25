@@ -49,10 +49,10 @@
 	        url:'/fixtures',
 	        templateUrl: viewsPrefix + 'fixtures.html',
 	        controller:'FixtureListController'
-	    }).state('viewShipwreck',{
-	       url:'/shipwrecks/:id/view',
-	       templateUrl: viewsPrefix + 'shipwreck-view.html',
-	       controller:'ShipwreckViewController'
+	    }).state('viewCustomer',{
+	       url:'/customers/:id/view',
+	       templateUrl: viewsPrefix + 'customer-view.html',
+	       controller:'CustomerViewController'
 	    }).state('viewFixture',{
 		       url:'/fixtures/:id/view',
 		       templateUrl: viewsPrefix + 'fixture-view.html',
