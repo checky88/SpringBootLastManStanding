@@ -61,10 +61,10 @@
 	        url:'/customers',
 	        templateUrl: viewsPrefix + 'customers.html',
 	        controller:'CustomerListController'
-	    }).state('editShipwreck',{
-	        url:'/shipwrecks/:id/edit',
-	        templateUrl: viewsPrefix + 'shipwreck-edit.html',
-	        controller:'ShipwreckEditController'
+	    }).state('viewHeadToHead',{
+	        url:'/headtohead/:id',
+	        templateUrl: viewsPrefix + 'headtohead.html',
+	        controller:'HeadToHeadViewController'
 	    })
 	})
 	.directive('updateTitle', ['$rootScope', '$timeout',

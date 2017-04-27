@@ -21,13 +21,24 @@ public class FixtureController {
 	
 	private List<Fixture> response;
 	
+	private List<Fixture> headToHeadResponse;
 	private final String accessToken = "3acf11744bd946098fe44176f6cc51a0";
 	
 	private static int currentGameWeek = 0;
+	
+	private static int numFixtures;
 
 	public static int getCurrentGameWeek() {
 		return currentGameWeek;
 	}
+	
+	
+
+	public static int getNumFixtures() {
+		return numFixtures;
+	}
+
+
 
 	@RequestMapping("/result")
 	public List<Fixture> outputresults() {
@@ -83,13 +94,14 @@ public class FixtureController {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		HttpHeaders headers = new HttpHeaders();
-		//headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("X-Auth-Token", accessToken);
 		
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
 		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
 		
 		response = fixture.getFixtures();
+		
+		numFixtures = fixture.getFixtures().size();
 		
 		for (Fixture elem : response) {
 			if(elem.getStatus().equals("TIMED") && currentGameWeek == 0 ){
@@ -103,13 +115,26 @@ public class FixtureController {
 	}
 
 	@RequestMapping(value = "fixtures/{id}", method = RequestMethod.GET)
-	public int get(@PathVariable int id) {
-		 response.get(id);
+	public Fixture get(@PathVariable int id) {
+		return response.get(id);
+	}
+	
+	
+	@RequestMapping(value = "headtohead/{id}", method = RequestMethod.GET)
+	public List<Fixture> post(@PathVariable int id) {
+		RestTemplate restTemplate = new RestTemplate();
 		
-		System.out.println("Hello world"+id);
+		HttpHeaders headers = new HttpHeaders();
+		//headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("X-Auth-Token", accessToken);
 		
-		return 0;
-
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		String url = "http://api.football-data.org/v1/fixtures/"+id;
+		Fixture fixture  = restTemplate.exchange(url, HttpMethod.GET, entity , Fixture.class).getBody();
+		
+		headToHeadResponse = fixture.getFixture();
+		
+		return headToHeadResponse;
 	}
 	
 	

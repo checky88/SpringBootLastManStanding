@@ -14,20 +14,43 @@ public class Fixture {
 
 
 
+	private static int count;
+	//getting a fixture by ID 
+	public static Fixture get(int id) {
+		return Fixture.get(id);
+	}
+
 	private List<Fixture> fixtures;
-
-
+	@JsonProperty("fixture")
+	private List<Fixture> fixture;
+	private int listId;
 	private int fixtureId;
 	private Links _links;
 	private String date;
 	private String status;
 	private int matchday;
+
 	private String homeTeamName;
+	
 	private String awayTeamName;
 
 	private Result result;
+
+	public Links get_links() {
+		return _links;
+	}
 	
-	
+	public String getAwayTeamName() {
+		return awayTeamName;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public List<Fixture> getFixture() {
+		return fixture;
+	}
 
 	public int getFixtureId() {
 		String theString = get_links().getSelf().getHref();
@@ -38,35 +61,21 @@ public class Fixture {
 		return fixtureId;
 	}
 
-	public void setFixtureId(int fixtureId) {
-		
-		this.fixtureId = fixtureId;
-		
-	}
-
-	public Links get_links() {
-		return _links;
-	}
-
-	public void set_links(Links _links) {
-		this._links = _links;
-
-	}
-
-	public String getAwayTeamName() {
-		return awayTeamName;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
 	public List<Fixture> getFixtures() {
 		return fixtures;
 	}
 
 	public String getHomeTeamName() {
 		return homeTeamName;
+	}
+
+	public int getListId() {
+		listId = count;
+		count++;
+		if(count==FixtureController.getNumFixtures()){
+		 count = 0;
+		}
+		return listId;
 	}
 
 	public int getMatchday() {
@@ -81,12 +90,25 @@ public class Fixture {
 		return status;
 	}
 
+	public void set_links(Links _links) {
+		this._links = _links;
+
+	}
+
 	public void setAwayTeamName(String awayTeamName) {
 		this.awayTeamName = awayTeamName;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public void setFixture(List<Fixture> fixture) {
+		this.fixture = fixture;
+	}
+
+	public void setFixtureId(int fixtureId) {
+		this.fixtureId = fixtureId;	
 	}
 
 	public void setFixtures(List<Fixture> fixtures) {
@@ -97,10 +119,14 @@ public class Fixture {
 		this.homeTeamName = homeTeamName;
 	}
 
+	public void setListId(int listId) {
+		this.listId = listId;
+	}
+	
 	public void setMatchday(int matchday) {
 		this.matchday = matchday;
 	}
-
+	
 	public void setResult(Result result) {
 		this.result = result;
 		// this.goalsAwayTeam = result.getGoalsAwayTeam();
@@ -109,11 +135,6 @@ public class Fixture {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	
-	//getting a fixture by ID 
-	public static Fixture get(int id) {
-		return Fixture.get(id);
 	}
 
 

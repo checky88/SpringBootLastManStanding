@@ -9,4 +9,6 @@ angular.module('app.controllers', [])
 	  $scope.customers = Customer.query(); //fetch all customers. Issues a GET to /api/v1/customers
 }).controller('CustomerViewController', function($scope, $stateParams, Customer) {
 	  $scope.customer = Customer.get({ id: $stateParams.id });
+}).controller('HeadToHeadViewController', function($scope, $stateParams, HeadToHead) {
+	  $scope.fixture = HeadToHead.query({ id: $stateParams.id });
 });

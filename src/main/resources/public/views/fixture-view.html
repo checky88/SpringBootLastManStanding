@@ -1,32 +1,28 @@
 <div class="container pad-top">
   <table class="table fixturetable">
       <tr>
-          <td><h3>Details for {{fixture.name}}</h3></td>
+          <td><h3>Details for {{fixture.homeTeamName}} vs {{fixture.awayTeamName}}</h3></td>
           <td></td>
       </tr>
       <tr>
-          <td>Name</td>
-          <td>{{shipwreck.name}}</td>
+          <td>Date</td>
+          <td>{{fixture.date}}</td>
       </tr>
       <tr>
-          <td>Description</td>
-          <td>{{shipwreck.description}}</td>
+          <td>Matchday</td>
+          <td>{{fixture.matchday}}</td>
       </tr>
       <tr>
-          <td>Wreck Condition</td>
-          <td>{{shipwreck.condition}}</td>
+          <td>Home Team</td>
+          <td>{{fixture.homeTeamName}}</td>
       </tr>
       <tr>
-          <td>Year Discovered</td>
-          <td>{{shipwreck.yearDiscovered}}</td>
+          <td>Away Team</td>
+          <td>{{fixture.awayTeamName}}</td>
       </tr>
       <tr>
-          <td>Depth of Wreck</td>
-          <td>{{shipwreck.depth}}</td>
-      </tr>
-      <tr>
-          <td>Location</td>
-          <td>{{shipwreck.latitude}}, {{shipwreck.longitude}}</td>
+          <td>Result</td>
+          <td>{{fixture.result.goalsHomeTeam}}:{{fixture.result.goalsAwayTeam}}</td>
       </tr>
   </table>
   <div>
