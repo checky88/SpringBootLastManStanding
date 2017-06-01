@@ -1,0 +1,32 @@
+<div class="container pad-top">
+<h1>HEAD TO HEAD</h1>
+  <table class="table fixturetable">
+      <tr>
+          <td><h3>Details for {{fixture.homeTeamName}} vs {{fixture.awayTeamName}}</h3></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>Date</td>
+          <td>{{fixture.date}}</td>
+      </tr>
+      <tr>
+          <td>Matchday</td>
+          <td>{{fixture.matchday}}</td>
+      </tr>
+      <tr>
+          <td>Home Team</td>
+          <td>{{fixture.homeTeamName}}</td>
+      </tr>
+      <tr>
+          <td>Away Team</td>
+          <td>{{fixture.awayTeamName}}</td>
+      </tr>
+      <tr>
+          <td>Result</td>
+          <td>{{fixture.result.goalsHomeTeam}}:{{fixture.result.goalsAwayTeam}}</td>
+      </tr>
+  </table>
+  <div>
+      <a class="btn btn-primary" ui-sref="editFixture({id:fixture.id})">Edit</a>
+  </div>
+</div>
