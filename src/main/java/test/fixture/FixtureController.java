@@ -44,7 +44,7 @@ public class FixtureController {
 	public List<Fixture> outputresults() {
 		RestTemplate restTemplate = new RestTemplate();
 		List<Fixture> fixture = restTemplate
-				.getForObject("http://api.football-data.org/v1/competitions/426/fixtures", Fixture.class)
+				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures", Fixture.class)
 				.getFixtures();
 		for (Fixture elem : fixture) {
 			//System.out.println(elem.getLinks());
@@ -60,7 +60,7 @@ public class FixtureController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		List<Fixture> fixture = restTemplate
-				.getForObject("http://api.football-data.org/v1/competitions/426/fixtures?matchday=1", Fixture.class)
+				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures?matchday=1", Fixture.class)
 				.getFixtures();
 		 List<String> response = new ArrayList<String>();
 		 List<String> winners = new ArrayList<String>();
@@ -109,16 +109,17 @@ public class FixtureController {
 		headers.set("X-Auth-Token", accessToken);
 		
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
+		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
 		
 		response = fixture.getFixtures();
 		
 		numFixtures = fixture.getFixtures().size();
 		
 		for (Fixture elem : response) {
-			if(elem.getStatus().equals("TIMED") && currentGameWeek == 0 ){
-				currentGameWeek=elem.getMatchday();
+			if(elem.getStatus().equals("TIMED")){
+				currentGameWeek = elem.getMatchday();
 				System.out.println("The Game Week is currently " + elem.getMatchday());
+				break;
 			}
 			
 		}
