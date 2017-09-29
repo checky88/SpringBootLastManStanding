@@ -24,7 +24,7 @@ public class FixtureController {
 	private List<Fixture> headToHeadResponse;
 	private final String accessToken = "3acf11744bd946098fe44176f6cc51a0";
 	
-	private static int currentGameWeek = 0;
+	private static int currentGameWeek = 1;
 	
 	private static int numFixtures;
 
@@ -55,18 +55,20 @@ public class FixtureController {
 
 	}
 
-	@RequestMapping("/fixture")
-	public List<String> showFixture() {
+	@RequestMapping("/winorloss")
+	public static boolean getWinorLoss(int gameweek, String TeamChosen) {
 		RestTemplate restTemplate = new RestTemplate();
 
 		List<Fixture> fixture = restTemplate
 				.getForObject("http://api.football-data.org/v1/competitions/426/fixtures?matchday=1", Fixture.class)
 				.getFixtures();
 		 List<String> response = new ArrayList<String>();
-
+		 List<String> winners = new ArrayList<String>();
+		 boolean win = false;
+				
 		for (Fixture elem : fixture) {
 			response.add(elem.getHomeTeamName() + " V  " + elem.getAwayTeamName());
-			if (elem.getMatchday() == 1) {
+			if (elem.getMatchday() == gameweek) {
 				// response.add(elem.getHomeTeamName() + " V " +
 				// elem.getAwayTeamName());
 				// System.out.println(elem.getResult().getGoalsAwayTeam()+"RESULT
@@ -74,16 +76,26 @@ public class FixtureController {
 				System.out.print(elem.getHomeTeamName() + " V  " + elem.getAwayTeamName());
 				if (elem.getResult().getGoalsHomeTeam() > elem.getResult().getGoalsAwayTeam()) {
 					System.out.println(" The Winner Was " + elem.getHomeTeamName());
+					winners.add(elem.getHomeTeamName());
 				} else if (elem.getResult().getGoalsHomeTeam() < elem.getResult().getGoalsAwayTeam()) {
 					System.out.println(" The Winner Was " + elem.getAwayTeamName());
+					winners.add(elem.getAwayTeamName());
 				} else {
 					System.out.println(" It was a DRAW ");
 				} // end else
-
 			} // end if
 		} // end for
-
-		return response;
+		
+		if(winners.contains(TeamChosen)){
+			System.out.println("You Win");
+			win = true;
+			return win;
+		}
+		else{
+			System.out.println("You Loose");
+			win = false;
+			return win;
+		}
 
 
 	}

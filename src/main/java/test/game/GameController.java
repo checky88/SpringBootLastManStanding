@@ -13,20 +13,41 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import test.customer.CustomerStub;
 import test.fixture.FixtureController;
+import test.model.Customer;
 
 @RestController
 @RequestMapping("api/v1/")
 public class GameController {
 
-	
+	public boolean responce = false;
 	
 	@RequestMapping(value = "game", method = RequestMethod.GET)
-	public int gameWeek() {
-		FixtureController.getCurrentGameWeek();
+	public boolean DidIWin() {
 		System.out.println("In game" + FixtureController.getCurrentGameWeek());
-		return FixtureController.getCurrentGameWeek();
+		calculateWin();
+		return responce;
 	}
+	
+	
+	public void calculateWin(){
+		System.out.println("calculating win");
+		String TeamChosen = CustomerStub.get(1L).getTeamChoice();
+		int gameweek = FixtureController.getCurrentGameWeek();
+		 responce = FixtureController.getWinorLoss(gameweek, TeamChosen);
+		
+		
+		
+		 
+		 
+		
+		 
+		 
+		 
+	}
+	
+	
 
 	
 }

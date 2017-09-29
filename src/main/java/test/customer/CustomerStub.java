@@ -13,11 +13,11 @@ public class CustomerStub {
 
 	//populate initial customers
 	static {
-		Customer a = new Customer(1L, "Raymond Kelly","Raykelly@email.com","Hull");
+		Customer a = new Customer(1L, "Raymond Kelly","Raykelly@email.com","Hull City FC");
 		custs.put(1L, a);
-		Customer b = new Customer(2L, "Raymond Kelly","Raykelly@email.com","Hull");
+		Customer b = new Customer(2L, "Raymond Kelly","Raykelly@email.com","Leicester City FC");
 		custs.put(2L, b);
-		Customer c = new Customer(3L, "Raymond Kelly","Raykelly@email.com","Hull");
+		Customer c = new Customer(3L, "Raymond Kelly","Raykelly@email.com","Watford FC");
 		custs.put(3L, c);
 		
 	}
