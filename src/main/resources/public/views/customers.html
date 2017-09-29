@@ -9,11 +9,13 @@
           <td>name</td>
           <td>email</td>
           <td>teamChoice</td>
+          <td>Win/Loose</td>
       </tr>
       <tr ng-repeat="customer in customers">
           <td>{{customer.name}}</td>
           <td>{{customer.email}}</td>
           <td>{{customer.teamChoice}}</td>
+          <td>{{customer.winLoose}}</td>
           <td>
               <a class="btn btn-primary" ui-sref="viewCustomer({id:customer.id})">View</a>
               <a class="btn btn-danger"  ng-click="deleteCustomer(customer)">Delete</a>

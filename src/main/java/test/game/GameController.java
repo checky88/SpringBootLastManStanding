@@ -21,19 +21,19 @@ import test.model.Customer;
 @RequestMapping("api/v1/")
 public class GameController {
 
-	public boolean responce = false;
+	public static boolean responce = false;
 	
 	@RequestMapping(value = "game", method = RequestMethod.GET)
-	public boolean DidIWin() {
+	public static boolean DidIWin(Long id) {
 		System.out.println("In game" + FixtureController.getCurrentGameWeek());
-		calculateWin();
+		calculateWin(id);
 		return responce;
 	}
 	
 	
-	public void calculateWin(){
+	public static void calculateWin(Long id){
 		System.out.println("calculating win");
-		String TeamChosen = CustomerStub.get(1L).getTeamChoice();
+		String TeamChosen = CustomerStub.get(id).getTeamChoice();
 		int gameweek = FixtureController.getCurrentGameWeek();
 		 responce = FixtureController.getWinorLoss(gameweek, TeamChosen);
 		
