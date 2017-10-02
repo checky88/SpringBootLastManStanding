@@ -18,39 +18,35 @@ import test.model.Customer;
 @RestController
 @RequestMapping("api/v1/")
 public class FixtureController {
-	
+
 	private List<Fixture> response;
-	
+
 	private List<Fixture> headToHeadResponse;
+	private List<Fixture> gameWeekResponse;
 	private final String accessToken = "3acf11744bd946098fe44176f6cc51a0";
-	
+
 	private static int currentGameWeek = 1;
-	
+	private static int numberofGameWeeks = 1;
+
 	private static int numFixtures;
 
 	public static int getCurrentGameWeek() {
 		return currentGameWeek;
 	}
-	
-	
 
 	public static int getNumFixtures() {
 		return numFixtures;
 	}
 
-
-
 	@RequestMapping("/result")
 	public List<Fixture> outputresults() {
 		RestTemplate restTemplate = new RestTemplate();
 		List<Fixture> fixture = restTemplate
-				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures", Fixture.class)
-				.getFixtures();
+				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures", Fixture.class).getFixtures();
 		for (Fixture elem : fixture) {
-			//System.out.println(elem.getLinks());
+			// System.out.println(elem.getLinks());
 		}
-		
-		
+
 		return fixture;
 
 	}
@@ -60,12 +56,13 @@ public class FixtureController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		List<Fixture> fixture = restTemplate
-				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures?matchday=1", Fixture.class)
+				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures?matchday=" + gameweek,
+						Fixture.class)
 				.getFixtures();
-		 List<String> response = new ArrayList<String>();
-		 List<String> winners = new ArrayList<String>();
-		 boolean win = false;
-				
+		List<String> response = new ArrayList<String>();
+		List<String> winners = new ArrayList<String>();
+		boolean win = false;
+
 		for (Fixture elem : fixture) {
 			response.add(elem.getHomeTeamName() + " V  " + elem.getAwayTeamName());
 			if (elem.getMatchday() == gameweek) {
@@ -85,45 +82,45 @@ public class FixtureController {
 				} // end else
 			} // end if
 		} // end for
-		
-		if(winners.contains(TeamChosen)){
+
+		if (winners.contains(TeamChosen)) {
 			System.out.println("You Win");
 			win = true;
 			return win;
-		}
-		else{
+		} else {
 			System.out.println("You Loose");
 			win = false;
 			return win;
 		}
 
-
 	}
 
 	@RequestMapping(value = "fixtures", method = RequestMethod.GET)
 	public List<Fixture> list() {
-		
+
 		RestTemplate restTemplate = new RestTemplate();
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("X-Auth-Token", accessToken);
-		
+
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
 		
+		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures",
+				HttpMethod.GET, entity, Fixture.class).getBody();
+
 		response = fixture.getFixtures();
-		
+
 		numFixtures = fixture.getFixtures().size();
-		
+
 		for (Fixture elem : response) {
-			if(elem.getStatus().equals("TIMED")){
+			if (elem.getStatus().equals("TIMED")) {
 				currentGameWeek = elem.getMatchday();
 				System.out.println("The Game Week is currently " + elem.getMatchday());
 				break;
 			}
-			
+
 		}
-        
+
 		return response;
 	}
 
@@ -132,49 +129,59 @@ public class FixtureController {
 		return response.get(id);
 	}
 	
-	
+
+
 	@RequestMapping(value = "headtohead/{id}", method = RequestMethod.GET)
 	public List<Fixture> post(@PathVariable int id) {
 		RestTemplate restTemplate = new RestTemplate();
-		
+
 		HttpHeaders headers = new HttpHeaders();
-		//headers.setContentType(MediaType.APPLICATION_JSON);
+		// headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("X-Auth-Token", accessToken);
-		
+
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		String url = "http://api.football-data.org/v1/fixtures/"+id;
-		Fixture fixture  = restTemplate.exchange(url, HttpMethod.GET, entity , Fixture.class).getBody();
-		
+		String url = "http://api.football-data.org/v1/fixtures/" + id;
+		Fixture fixture = restTemplate.exchange(url, HttpMethod.GET, entity, Fixture.class).getBody();
+
 		headToHeadResponse = fixture.getFixture();
-		
+
 		return headToHeadResponse;
 	}
 	
-	
-	
-	///test method remove at the end
+	@RequestMapping(value = "gameweek/{id}", method = RequestMethod.GET)
+	public List<Fixture> postGameweek(@PathVariable int id) {
+		RestTemplate restTemplate = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("X-Auth-Token", accessToken);
+
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures?matchday="+id,
+				HttpMethod.GET, entity, Fixture.class).getBody();
+
+		response = fixture.getFixtures();
+
+		return response;
+	}
+
+	/// test method remove at the end
 	@RequestMapping(value = "/ray")
 	public List<Fixture> testing() {
-		
+
 		RestTemplate restTemplate = new RestTemplate();
-		
+
 		HttpHeaders headers = new HttpHeaders();
-		//headers.setContentType(MediaType.APPLICATION_JSON);
+		// headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.set("X-Auth-Token", accessToken);
-		
+
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		Fixture fixture  = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures", HttpMethod.GET, entity , Fixture.class).getBody();
-		
+		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/426/fixtures",
+				HttpMethod.GET, entity, Fixture.class).getBody();
+
 		response = fixture.getFixtures();
 
 		return response;
 
 	}
-	
-	
-	
-
-
-
 
 }

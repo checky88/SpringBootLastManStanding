@@ -57,9 +57,5 @@ public class Customer {
 		return winLoose;
 	}
 
-	public void setWinLoose(Boolean winLoose) {
-		this.winLoose = GameController.DidIWin(this.id);
-		// this.winLoose = winLoose;
-	}
 
 }

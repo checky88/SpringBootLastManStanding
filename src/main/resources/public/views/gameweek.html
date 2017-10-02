@@ -9,7 +9,7 @@
 		gameweek {{selected_fixture.matchday}}</a>
 	<table class="table fixturetable">
 		<tr>
-			<td><h3>All Fixture</h3></td>
+			<td><h3>GAME Week</h3></td>
 			<td></td>
 		</tr>
 		<tr>
@@ -20,7 +20,7 @@
 			<td>Result</td>
 			<td>Fixture details</td>
 		</tr>
-		<tr ng-repeat="fixture in fixtures | filter : searchText ">
+		<tr ng-repeat="fixture in gameweek | filter : searchText ">
 			<td>{{fixture.matchday}}</td>
 			<td>{{fixture.listId}}</td>
 			<td>{{fixture.fixtureId}}</td>

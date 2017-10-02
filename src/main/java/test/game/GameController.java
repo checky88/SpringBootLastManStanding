@@ -35,6 +35,8 @@ public class GameController {
 		System.out.println("calculating win");
 		String TeamChosen = CustomerStub.get(id).getTeamChoice();
 		int gameweek = FixtureController.getCurrentGameWeek();
+		System.out.println("Ray In game" + gameweek);
+		gameweek = gameweek - 1;
 		 responce = FixtureController.getWinorLoss(gameweek, TeamChosen);
 		
 		

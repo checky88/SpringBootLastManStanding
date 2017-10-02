@@ -17,6 +17,13 @@ angular.module('app.services', []).factory('Fixture', function($resource) {
 	      method: 'PUT'
 	    }
 	  });
+}).factory('GameWeek', function($resource) {
+	  return $resource('/api/v1/gameweek/:id', { id: '@id' }, {
+				query:  {method:'GET', isArray:true},  
+			    update: {
+			      method: 'PUT'
+			    }
+	  });
 }).service('popupService',function($window){
     this.showPopup=function(message){
         return $window.confirm(message);

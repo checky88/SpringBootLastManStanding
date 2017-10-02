@@ -65,6 +65,10 @@
 	        url:'/headtohead/:id',
 	        templateUrl: viewsPrefix + 'headtohead.html',
 	        controller:'HeadToHeadViewController'
+	    }).state('viewGameweek',{
+		       url:'/gameweek/:id/view',
+		       templateUrl: viewsPrefix + 'gameweek.html',
+		       controller:'GameWeekViewController'
 	    })
 	})
 	.directive('updateTitle', ['$rootScope', '$timeout',

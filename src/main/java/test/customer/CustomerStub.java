@@ -19,6 +19,8 @@ public class CustomerStub {
 		custs.put(2L, b);
 		Customer c = new Customer(3L, "Raymond Kelly","Raykelly@email.com","Watford FC",null);
 		custs.put(3L, c);
+		Customer e = new Customer(4L, "Raymond Kelly","Raykelly@email.com","Arsenal FC",null);
+		custs.put(4L, e);
 		
 	}
 
