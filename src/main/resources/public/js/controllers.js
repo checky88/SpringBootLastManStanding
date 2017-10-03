@@ -9,7 +9,8 @@ angular.module('app.controllers', [])
 	  $scope.gameweek = GameWeek.query({ id: $stateParams.id });
 	  console.log($scope.gameweek);
 }).controller('CustomerListController', function($scope, $state, popupService, $window, Customer) {
-	  $scope.customers = Customer.query(); //fetch all customers. Issues a GET to /api/v1/customers
+	  $scope.customers = Customer.query();//fetch all customers. Issues a GET to /api/v1/customers
+	  console.log($scope.customers);
 }).controller('CustomerViewController', function($scope, $stateParams, Customer) {
 	  $scope.customer = Customer.get({ id: $stateParams.id });
 }).controller('HeadToHeadViewController', function($scope, $stateParams, HeadToHead) {
@@ -51,6 +52,22 @@ angular.module('app.controllers', [])
 	    }
 	    return items;
 	  };
-	});
+	}).controller('myController', ['$scope', function ($scope) {
+
+        $scope.updateCheckBox = function () {
+
+            // I HAVE SET CONDITION TO CHECK IF SELECTED PRODUCT IS "IBM", 
+            // THEN ENABLE ALL CHECKBOXES OR ELSE DISABLE ALL.
+
+            if ($scope.item != null) {
+                if ($scope.item.name == "true")
+                    $scope.enableMe = true;
+                else
+                    $scope.enableMe = false;
+            }
+            else
+                $scope.enableMe = false;
+        };
+    } ]);
 
 

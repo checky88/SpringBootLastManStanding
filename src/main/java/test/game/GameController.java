@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import test.competition.Competition;
 import test.customer.CustomerStub;
 import test.fixture.FixtureController;
 import test.model.Customer;
@@ -24,32 +25,14 @@ public class GameController {
 	public static boolean responce = false;
 	
 	@RequestMapping(value = "game", method = RequestMethod.GET)
-	public static boolean DidIWin(Long id) {
+	public static boolean DidIWin(int startWeek, Long id) {
 		System.out.println("In game" + FixtureController.getCurrentGameWeek());
-		calculateWin(id);
+		System.out.println("calculating win");
+		List<String> TeamChosen = CustomerStub.get(id).getTeamChoice();
+		int gameweek = FixtureController.getCurrentGameWeek();
+		responce = FixtureController.evaluateAllFixtures(startWeek,gameweek, TeamChosen);
 		return responce;
 	}
-	
-	
-	public static void calculateWin(Long id){
-		System.out.println("calculating win");
-		String TeamChosen = CustomerStub.get(id).getTeamChoice();
-		int gameweek = FixtureController.getCurrentGameWeek();
-		System.out.println("Ray In game" + gameweek);
-		gameweek = gameweek - 1;
-		 responce = FixtureController.getWinorLoss(gameweek, TeamChosen);
 		
-		
-		
-		 
-		 
-		
-		 
-		 
-		 
-	}
-	
-	
-
 	
 }

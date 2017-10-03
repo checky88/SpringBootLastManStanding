@@ -1,12 +1,8 @@
 <div class="container pad-top">
 	Search : <input type="text" placeholder="Search Fixtures"
-		ng-model="searchText" /> </br> Choose a game week : <select
-		ng-model="selected_fixture"
-		ng-options="fixture.matchday for fixture in fixtures | unique: 'matchday'">
-		<option value="">Choose Game week</option>
-	</select> <a class="btn btn-primary"
-		ui-sref="viewGameweek({id:selected_fixture.matchday})">View
-		gameweek {{selected_fixture.matchday}}</a>
+		ng-model="searchText" /> 
+	</br>
+	<a class="btn btn-primary" href="#/fixtures" role="button">Back To all Fixtures</a>
 	<table class="table fixturetable">
 		<tr>
 			<td><h3>GAME Week</h3></td>

@@ -2,22 +2,28 @@
   <a ui-sref="newCustomer" class="btn-primary btn-lg nodecoration">Add New Customer</a>
   <table class="table customertable">
       <tr>
-          <td><h3>All Customers</h3></td>
+          <td><h3>All Entries</h3></td>
           <td></td>
+      </tr>
+      <tr>
       </tr>
       <tr>
           <td>name</td>
           <td>email</td>
-          <td>teamChoice</td>
-          <td>Win/Loose</td>
+          <td>teamChoice week 1</td>
+          <td>teamChoice week 2</td>
+          <td>teamChoice week 3</td>
+          <td>Still in the Competition</td>
       </tr>
       <tr ng-repeat="customer in customers">
           <td>{{customer.name}}</td>
           <td>{{customer.email}}</td>
-          <td>{{customer.teamChoice}}</td>
+          <td>{{customer.teamChoice[0]}}</td>
+          <td>{{customer.teamChoice[1]}}</td>
+          <td>{{customer.teamChoice[2]}}</td>
           <td>{{customer.winLoose}}</td>
           <td>
-              <a class="btn btn-primary" ui-sref="viewCustomer({id:customer.id})">View</a>
+              <a ng-disabled="myController " class="btn btn-primary" ui-sref="viewCustomer({id:customer.id})">View</a>
               <a class="btn btn-danger"  ng-click="deleteCustomer(customer)">Delete</a>
           </td>
       </tr>

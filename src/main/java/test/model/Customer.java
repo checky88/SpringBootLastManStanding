@@ -1,25 +1,31 @@
 package test.model;
 
+import java.util.List;
+
+import test.competition.Competition;
 import test.game.GameController;
 
-public class Customer {
+public class Customer extends Competition   {
 	Long id;
 	String name;
 	String email;
-	String teamChoice;
+	List<String> teamChoice;
 	Boolean winLoose;
+	
+	
 
-	public Customer() {
-	}
 
-	public Customer(Long i, String name, String email, String teamChoice, Boolean winLoose) {
+	public Customer(Long i, String name, String email, List<String> teamChoice, Boolean winLoose, int startWeek) {
+		super(startWeek);
 		this.id = i;
 		this.name = name;
 		this.email = email;
 		this.teamChoice = teamChoice;
 		this.winLoose = winLoose;
-	}
+		
 
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -44,18 +50,18 @@ public class Customer {
 		this.email = email;
 	}
 
-	public String getTeamChoice() {
+	public List<String> getTeamChoice() {
 		return teamChoice;
 	}
 
-	public void setTeamChoice(String teamChoice) {
+	public void setTeamChoice(List<String> teamChoice) {
 		this.teamChoice = teamChoice;
 	}
 
 	public Boolean getWinLoose() {
-		this.winLoose = GameController.DidIWin(this.id);
+		this.winLoose = GameController.DidIWin(this.getStartWeek(),this.id);
 		return winLoose;
 	}
-
+	
 
 }

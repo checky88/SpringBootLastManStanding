@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import test.competition.Competition;
 import test.model.Customer;
 
 @RestController
@@ -22,11 +23,9 @@ public class FixtureController {
 	private List<Fixture> response;
 
 	private List<Fixture> headToHeadResponse;
-	private List<Fixture> gameWeekResponse;
-	private final String accessToken = "3acf11744bd946098fe44176f6cc51a0";
+	private final static String accessToken = "3acf11744bd946098fe44176f6cc51a0";
 
 	private static int currentGameWeek = 1;
-	private static int numberofGameWeeks = 1;
 
 	private static int numFixtures;
 
@@ -50,26 +49,33 @@ public class FixtureController {
 		return fixture;
 
 	}
-
-	@RequestMapping("/winorloss")
-	public static boolean getWinorLoss(int gameweek, String TeamChosen) {
+	
+	
+	
+	@RequestMapping("/evaluateFixtures")
+	public static boolean evaluateAllFixtures(int startWeek, int gameweek, List<String> teamChosen) {
+		int startweek = startWeek;
+		int team = 0;
+		boolean win = false;
+		int weeksPlayed = gameweek - startweek;
+				
+		while(startweek < gameweek ){
+			
 		RestTemplate restTemplate = new RestTemplate();
-
-		List<Fixture> fixture = restTemplate
-				.getForObject("http://api.football-data.org/v1/competitions/445/fixtures?matchday=" + gameweek,
-						Fixture.class)
-				.getFixtures();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("X-Auth-Token", accessToken);
+		
+		HttpEntity<String> entity = new HttpEntity<String>(headers);
+		
+		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures?matchday=" + startweek,
+					HttpMethod.GET, entity, Fixture.class).getBody();
+		List<Fixture> listResponse = fixture.getFixtures();
 		List<String> response = new ArrayList<String>();
 		List<String> winners = new ArrayList<String>();
-		boolean win = false;
 
-		for (Fixture elem : fixture) {
+		for (Fixture elem : listResponse) {
 			response.add(elem.getHomeTeamName() + " V  " + elem.getAwayTeamName());
-			if (elem.getMatchday() == gameweek) {
-				// response.add(elem.getHomeTeamName() + " V " +
-				// elem.getAwayTeamName());
-				// System.out.println(elem.getResult().getGoalsAwayTeam()+"RESULT
-				// ...... ");
 				System.out.print(elem.getHomeTeamName() + " V  " + elem.getAwayTeamName());
 				if (elem.getResult().getGoalsHomeTeam() > elem.getResult().getGoalsAwayTeam()) {
 					System.out.println(" The Winner Was " + elem.getHomeTeamName());
@@ -80,19 +86,26 @@ public class FixtureController {
 				} else {
 					System.out.println(" It was a DRAW ");
 				} // end else
-			} // end if
 		} // end for
-
-		if (winners.contains(TeamChosen)) {
-			System.out.println("You Win");
-			win = true;
-			return win;
-		} else {
-			System.out.println("You Loose");
-			win = false;
-			return win;
+		
+		if(teamChosen.size() <= weeksPlayed){
+			if (winners.contains(teamChosen.get(team))) {
+				System.out.println("Your still in");
+				win = true;
+			} else {
+				System.out.println("Your out");
+				win = false;
+				break;
+			}			
+		}else{
+			System.out.println("You Have Not Selected enough teams you will be auto selected");
+			///in here i will add logic to auto draft a unselected team 
+			
 		}
-
+		team++;
+		startweek++;
+		}
+		return win;
 	}
 
 	@RequestMapping(value = "fixtures", method = RequestMethod.GET)
