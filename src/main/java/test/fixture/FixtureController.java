@@ -51,7 +51,6 @@ public class FixtureController {
 	}
 	
 	
-	
 	@RequestMapping("/evaluateFixtures")
 	public static boolean evaluateAllFixtures(int startWeek, int gameweek, List<String> teamChosen) {
 		int startweek = startWeek;
@@ -60,17 +59,7 @@ public class FixtureController {
 		int weeksPlayed = gameweek - startweek;
 				
 		while(startweek < gameweek ){
-//		
-//		
-//		RestTemplate restTemplate = new RestTemplate();
-//		
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.set("X-Auth-Token", accessToken);
-//		
-//		HttpEntity<String> entity = new HttpEntity<String>(headers);
-//		
-//		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures?matchday=" + startweek,
-//					HttpMethod.GET, entity, Fixture.class).getBody();
+
 		List<Fixture> listResponse = apiCall(startweek);
 		List<String> response = new ArrayList<String>();
 		List<String> winners = new ArrayList<String>();
@@ -112,19 +101,7 @@ public class FixtureController {
 	@RequestMapping(value = "fixtures", method = RequestMethod.GET)
 	public List<Fixture> list() {
 
-//		RestTemplate restTemplate = new RestTemplate();
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.set("X-Auth-Token", accessToken);
-//
-//		HttpEntity<String> entity = new HttpEntity<String>(headers);
-//		
-//		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures",
-//				HttpMethod.GET, entity, Fixture.class).getBody();
-//
-//		response = fixture.getFixtures();
-		response =apiCall(0);
-//		
+		response =apiCall(0);		
 
 		for (Fixture elem : response) {
 			if (elem.getStatus().equals("TIMED")) {
@@ -164,17 +141,7 @@ public class FixtureController {
 	
 	@RequestMapping(value = "gameweek/{id}", method = RequestMethod.GET)
 	public List<Fixture> postGameweek(@PathVariable int id) {
-//		RestTemplate restTemplate = new RestTemplate();
-//
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.set("X-Auth-Token", accessToken);
-//
-//		HttpEntity<String> entity = new HttpEntity<String>(headers);
-//		Fixture fixture = restTemplate.exchange("http://api.football-data.org/v1/competitions/445/fixtures?matchday="+id,
-//				HttpMethod.GET, entity, Fixture.class).getBody();
-
 		response = apiCall(id);
-
 		return response;
 	}
 
