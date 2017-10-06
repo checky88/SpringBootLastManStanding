@@ -2,6 +2,7 @@ package test.fixture;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration;
 
@@ -13,7 +14,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Fixture {
 
 
-
+	@Autowired
+	private FixtureController fixtureController = new FixtureController();
+	
 	private static int count;
 	//getting a fixture by ID 
 	public static Fixture get(int id) {
@@ -72,7 +75,7 @@ public class Fixture {
 	public int getListId() {
 		listId = count;
 		count++;
-		if(count==FixtureController.getNumFixtures()){
+		if(count == fixtureController.getNumFixtures()){
 		 count = 0;
 		}
 		return listId;

@@ -15,7 +15,19 @@ angular.module('app.controllers', [])
 	  $scope.customer = Customer.get({ id: $stateParams.id });
 }).controller('HeadToHeadViewController', function($scope, $stateParams, HeadToHead) {
 	  $scope.fixture = HeadToHead.query({ id: $stateParams.id });
-}).filter('unique', function () {
+}).controller('CustomerEditController', function($scope, $state, $stateParams, Customer) {
+	  $scope.updateCustomer = function() { //Update the edited customer. Issues a PUT to /api/v1/customer/:id
+		    $scope.customer.$update(function() {
+		      $state.go('customers'); // on success go back to the list i.e. shipwrecks state.
+		    });
+		  };
+
+		  $scope.loadCustomer = function() { //Issues a GET request to /api/v1/shipwrecks/:id to get a shipwreck to update
+		    $scope.customer = Customer.get({ id: $stateParams.id });
+		  };
+
+		  $scope.loadCustomer(); // Load a shipwreck which can be edited on UI
+		}).filter('unique', function () {
 
 	  return function (items, filterOn) {
 
@@ -52,22 +64,5 @@ angular.module('app.controllers', [])
 	    }
 	    return items;
 	  };
-	}).controller('myController', ['$scope', function ($scope) {
-
-        $scope.updateCheckBox = function () {
-
-            // I HAVE SET CONDITION TO CHECK IF SELECTED PRODUCT IS "IBM", 
-            // THEN ENABLE ALL CHECKBOXES OR ELSE DISABLE ALL.
-
-            if ($scope.item != null) {
-                if ($scope.item.name == "true")
-                    $scope.enableMe = true;
-                else
-                    $scope.enableMe = false;
-            }
-            else
-                $scope.enableMe = false;
-        };
-    } ]);
-
+	});
 

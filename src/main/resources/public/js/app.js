@@ -53,6 +53,10 @@
 	       url:'/customers/:id/view',
 	       templateUrl: viewsPrefix + 'customer-view.html',
 	       controller:'CustomerViewController'
+	    }).state('editCustomer',{
+	        url:'/customer/:id/edit',
+	        templateUrl: viewsPrefix + 'customer-edit.html',
+	        controller:'CustomerEditController'
 	    }).state('viewFixture',{
 		       url:'/fixtures/:id/view',
 		       templateUrl: viewsPrefix + 'fixture-view.html',

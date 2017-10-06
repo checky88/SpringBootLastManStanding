@@ -13,6 +13,8 @@ public class Competition {
 	// for the time being setting to 5 will revist and let master enter start week
 	private int startWeek = 5;
 	
+	public Competition(){}
+	
 	public Competition(int startWeek) {
 		this.startWeek = 5;
 	}

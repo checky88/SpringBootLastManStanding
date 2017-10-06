@@ -2,6 +2,8 @@ package test.model;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import test.competition.Competition;
 import test.game.GameController;
 
@@ -12,8 +14,12 @@ public class Customer extends Competition   {
 	List<String> teamChoice;
 	Boolean winLoose;
 	
+	@Autowired
+	private GameController gameController = new GameController();
 	
-
+	public Customer() { 
+		
+	}
 
 	public Customer(Long i, String name, String email, List<String> teamChoice, Boolean winLoose, int startWeek) {
 		super(startWeek);
@@ -58,8 +64,12 @@ public class Customer extends Competition   {
 		this.teamChoice = teamChoice;
 	}
 
+	public void setWinLoose(Boolean winLoose) {
+		this.winLoose = winLoose;
+	}
+
 	public Boolean getWinLoose() {
-		this.winLoose = GameController.DidIWin(this.getStartWeek(),this.id);
+		this.winLoose = gameController.DidIWin(this.getStartWeek(),this.id);
 		return winLoose;
 	}
 	

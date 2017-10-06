@@ -25,7 +25,7 @@ public class GameController {
 	public static boolean responce = false;
 	
 	@RequestMapping(value = "game", method = RequestMethod.GET)
-	public static boolean DidIWin(int startWeek, Long id) {
+	public boolean DidIWin(int startWeek, Long id) {
 		System.out.println("In game" + FixtureController.getCurrentGameWeek());
 		System.out.println("calculating win");
 		List<String> TeamChosen = CustomerStub.get(id).getTeamChoice();

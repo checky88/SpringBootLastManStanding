@@ -33,7 +33,7 @@ public class FixtureController {
 		return currentGameWeek;
 	}
 
-	public static int getNumFixtures() {
+	public int getNumFixtures() {
 		return numFixtures;
 	}
 
